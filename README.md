@@ -41,7 +41,7 @@ Flag with sequential values
 
 Flag occurring more than once
 
-`node my-scripf.js -f value-1 value-2 -f value-3 value-4`
+`node my-script.js -f value-1 value-2 -f value-3 value-4`
 ```js
 { f: 'value-3 value-4' }
 ```
@@ -74,13 +74,6 @@ Flag as a parameter
 { param: undefined }
 ```
 
-Param occurring more than once
-
-`node my-script.js --param --param`
-```js
-{ param: [undefined, undefined] }
-```
-
 Param with value
 
 `node my-script.js --param value`
@@ -102,7 +95,7 @@ Param with sequential values
 
 Param occurring more than once
 
-`node my-scripf.js --param value-1 value-2 --param value-3 value-4`
+`node my-script.js --param value-1 value-2 --param value-3 value-4`
 ```js
 { param: ['value-1 value-2', 'value-3 value-4'] }
 ```
