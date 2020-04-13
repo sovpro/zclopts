@@ -54,7 +54,6 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
     // Append a value
 
     else if (
-      key !== null &&
       key !== meta.prior_option.key &&
       isImplicitValue (meta.config[non_null_key]) === false
     ) {
@@ -62,7 +61,7 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
 
       // Convert to array as needed
       if (! Array.isArray (meta.config[non_null_key])) {
-        value_update = [meta.config[non_null_key]] //.concat ([value])
+        value_update = [meta.config[non_null_key]]
       }
 
       value_update = value_update.concat ([value])
@@ -93,7 +92,8 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
       else if (Array.isArray (meta.config[non_null_key])) {
         const last_idx = meta.config[non_null_key].length - 1
         const last_value = meta.config[non_null_key][last_idx]
-        value_update = meta.config[non_null_key].slice (0, last_idx).concat ([last_value + ' ' + value])
+        const last_update = isImplicitValue (last_value) ? value : last_value + ' ' + value
+        value_update = meta.config[non_null_key].slice (0, last_idx).concat ([last_update])
       }
 
       // Concat to a string value
