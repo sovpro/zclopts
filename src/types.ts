@@ -17,7 +17,7 @@ export interface CommandLineParameter extends CommandLineArgument {
 export interface CommandLineFlag extends CommandLineArgument {
   type: CommandLineArgumentType.Flag;
   key: string;
-  value: true;
+  value: boolean;
 }
 
 export interface CommandLineValue extends CommandLineArgument {
@@ -30,11 +30,11 @@ export type ProgramOption = CommandLineParameter | CommandLineFlag | CommandLine
 export type ProgramOptionList = Array<ProgramOption | null>
 
 export interface ProgramOptionsConfig {
-  [index: string]: true | undefined | string | number | Array<undefined | string>;
+  [index: string]: boolean | undefined | string | number | Array<undefined | string>;
 }
 
 export interface ProgramOptionsMeta {
-  prior_option: { key: string | null, value: true | undefined | string | number | Array<undefined | string> } | null;
+  prior_option: { key: string | null, value: boolean | undefined | string | number | Array<undefined | string> } | null;
   non_null_key: string | null;
   config: ProgramOptionsConfig;
 }

@@ -125,7 +125,8 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
 function isImplicitValue (value: ProgramOption['value']): boolean {
   return (
     value === true ||
+    value === false ||
     value === undefined ||
-   (typeof value === 'number' && Object.is (value, NaN) === false)
+    (typeof value === 'number' && Object.is (value, NaN) === false)
   )
 }

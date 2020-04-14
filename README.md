@@ -18,11 +18,21 @@ const opts = zclopts (argv)
 { f: true }
 ```
 
+`node my-script.js -no-f`
+```js
+{ f: false }
+```
+
 Double Flag
 
 `node my-script.js -ff`
 ```js
 { f: 2 }
+```
+
+`node my-script.js -no-ff`
+```js
+{ f: false }
 ```
 
 Flag with value
@@ -53,11 +63,21 @@ Flag group
 { a: true, b: true, c: true }
 ```
 
+`node my-script.js -no-abc`
+```js
+{ a: false, b: false, c: false }
+```
+
 Flag group with trailing value
 
 `node my-script.js -abc value`
 ```js
-{ a: true, b: true, c: value }
+{ a: true, b: true, c: 'value' }
+```
+
+`node my-script.js -no-abc value`
+```js
+{ a: false, b: false, c: 'value' }
 ```
 
 Flag as a parameter
