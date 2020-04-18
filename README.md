@@ -4,6 +4,8 @@ Zero-configuration command-line option parsing
 
 BETA
 
+[![Build status for Node.js 8.x and newer](https://github.com/sovpro/zclopts/workflows/Node.js%208.x%20and%20newer%20/badge.svg?branch=master)](https://github.com/sovpro/zclopts/commits/master)
+
 ```js
 import zclopts from '@sovpro/zclopts'
 
