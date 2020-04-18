@@ -1,8 +1,12 @@
 {
   "name": "@sovpro/zclopts",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "Zero-configuration command-line option parsing",
   "main": "dist/zclopts",
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sovpro/zclopts.git"
@@ -11,7 +15,13 @@
   "author": "sovpro <its.so@outlook.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.1.4"
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
+    "@types/source-map-support": "^0.5.1",
+    "jest": "^25.3.0",
+    "source-map-support": "^0.5.16",
+    "ts-jest": "^25.3.1",
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": "*"
