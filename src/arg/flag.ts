@@ -58,10 +58,10 @@ export function makeFlag (state = true, key: string): CommandLineFlag {
 // isFlagChar internal constants
 isFlagChar.CHAR_CODE_NUM_LOWER = 48
 isFlagChar.CHAR_CODE_NUM_UPPER = 57
-isFlagChar.CHAR_CODE_AZ_LOWER = 65
-isFlagChar.CHAR_CODE_AZ_UPPER = 90
-isFlagChar.CHAR_CODE_AZ_LOWER = 97
-isFlagChar.CHAR_CODE_AZ_UPPER = 122
+isFlagChar.CHAR_CODE_AZ_UC_LOWER = 65
+isFlagChar.CHAR_CODE_AZ_UC_UPPER = 90
+isFlagChar.CHAR_CODE_AZ_LC_LOWER = 97
+isFlagChar.CHAR_CODE_AZ_LC_UPPER = 122
 isFlagChar.CHAR_CODE_DASH = 45
 
 /**
@@ -79,13 +79,13 @@ export function isFlagChar (chr) {
       code
     ) ||
     inRangeInclusive (
-      isFlagChar.CHAR_CODE_AZ_LOWER,
-      isFlagChar.CHAR_CODE_AZ_UPPER,
+      isFlagChar.CHAR_CODE_AZ_LC_LOWER,
+      isFlagChar.CHAR_CODE_AZ_LC_UPPER,
       code
     ) ||
     inRangeInclusive (
-      isFlagChar.CHAR_CODE_AZ_LOWER,
-      isFlagChar.CHAR_CODE_AZ_UPPER,
+      isFlagChar.CHAR_CODE_AZ_UC_LOWER,
+      isFlagChar.CHAR_CODE_AZ_UC_UPPER,
       code
     )
   )
