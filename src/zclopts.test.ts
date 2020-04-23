@@ -97,7 +97,19 @@ describe ('zclopts', () => {
       const opts = zclopts (argv.slice (2))
       expect (opts).toHaveProperty ('f', 'value')
     })
-     
+
+    it ('A negation of a preceding flag should override the prior value', () => {
+      const argv = makeArgv ('-f', '-no-f')
+      const opts = zclopts (argv.slice (2))
+      expect (opts).toHaveProperty ('f', false)
+    })
+
+    it ('A non-negation of a preceding flag should override the prior value', () => {
+      const argv = makeArgv ('-no-f', '-f')
+      const opts = zclopts (argv.slice (2))
+      expect (opts).toHaveProperty ('f', true)
+    })
+
   })
 
   describe ('Parses param options', () => {

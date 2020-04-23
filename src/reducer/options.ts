@@ -47,6 +47,13 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
           non_null_key
         }
       }
+      else if (value === false) {
+        return {
+          config: { ...meta.config , [non_null_key]: value },
+          prior_option: { key, value },
+          non_null_key
+        }
+      }
 
       return { ...meta, prior_option: { key, value }, non_null_key }
     }
