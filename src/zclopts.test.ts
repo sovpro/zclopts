@@ -138,10 +138,10 @@ describe ('zclopts', () => {
       expect (opts).toHaveProperty ('param', 'value-1 value-2')
     })
 
-    it ('A param occurring more than once should have an array with the value of each occurrence', () => {
-      const argv = makeArgv ('--param', 'value-1', 'value-2', '--param', 'value-3', 'value-4')
+    it ('A param occurring more than once, with one or more values, should be an array with the concatenated value of each occurrence', () => {
+      const argv = makeArgv ('--param', 'value-1', 'value-2','--param', 'value-3', '--param', 'value-4', 'value-5')
       const opts = zclopts (argv.slice (2))
-      expect (opts).toHaveProperty ('param', ['value-1 value-2', 'value-3 value-4'])
+      expect (opts).toHaveProperty ('param', ['value-1 value-2', 'value-3', 'value-4 value-5'])
     })
 
     it ('A param occurring more than once with no value should remain without value', () => {
