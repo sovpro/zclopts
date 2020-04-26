@@ -1,6 +1,6 @@
 {
   "name": "@sovpro/zclopts",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "Zero-configuration command-line option parsing",
   "main": "dist/zclopts",
   "scripts": {

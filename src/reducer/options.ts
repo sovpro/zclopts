@@ -64,11 +64,11 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
       key !== meta.prior_option.key &&
       isImplicitValue (meta.config[non_null_key]) === false
     ) {
-      let value_update;
+      let value_update = meta.config[non_null_key]
 
       // Convert to array as needed
       if (! Array.isArray (meta.config[non_null_key])) {
-        value_update = [meta.config[non_null_key]]
+        value_update = [value_update]
       }
 
       value_update = value_update.concat ([value])
