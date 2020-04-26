@@ -110,6 +110,15 @@ describe ('zclopts', () => {
       expect (opts).toHaveProperty ('f', true)
     })
 
+    it ('A hypenated non-negation flag should be parsed as separate flags', () => {
+      const argv = makeArgv ('-F-L-A--G')
+      const opts = zclopts (argv.slice (2))
+      expect (opts).toHaveProperty ('F', true)
+      expect (opts).toHaveProperty ('L', true)
+      expect (opts).toHaveProperty ('A', true)
+      expect (opts).toHaveProperty ('G', true)
+    })
+
   })
 
   describe ('Parses param options', () => {
