@@ -113,4 +113,6 @@ function getFlagState (key: string, state: boolean): [string, boolean] {
 
   if (prefix === 'no')
     return [key.substr (dash_idx + 1), false]
+
+  return [key, true]
 }
