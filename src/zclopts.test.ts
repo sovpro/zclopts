@@ -6,6 +6,10 @@ function makeArgv (...args) {
 
 describe ('zclopts', () => {
 
+  it ('Should parse process.argv when receiving no arguments', () => {
+    expect (zclopts ()).toBeDefined ()
+  })
+
   describe ('Parses flag options', () => {
   
     it ('A flag should default to true', () => {
