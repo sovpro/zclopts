@@ -22,40 +22,13 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
   // No state .. No op
   if (non_null_key === null) return meta
 
-  // Whaen an option exists, append or concat the value
+  // Whaen an option exists, update, append or concat the value
   if (meta.config.hasOwnProperty (non_null_key)) {
 
     // Implicit values
 
     if (isImplicitValue (value)) {
-      if (value === true) {
-        let value_update;
-
-        if (meta.config[non_null_key] === true) {
-          value_update = 2
-        }
-        else if (typeof meta.config[non_null_key] === 'number') {
-          value_update = meta.config[non_null_key] + 1
-        }
-        else {
-          value_update = true
-        }
-
-        return {
-          config: { ...meta.config , [non_null_key]: value_update },
-          prior_option: { key, value: value_update },
-          non_null_key
-        }
-      }
-      else if (value === false) {
-        return {
-          config: { ...meta.config , [non_null_key]: value },
-          prior_option: { key, value },
-          non_null_key
-        }
-      }
-
-      return { ...meta, prior_option: { key, value }, non_null_key }
+      return updateOptionImplicitValue (meta, key, value, non_null_key)
     }
 
     // Append a value
@@ -64,55 +37,13 @@ export function reduceOptions (meta, obj, i): ProgramOptionsMeta {
       key !== meta.prior_option.key &&
       isImplicitValue (meta.config[non_null_key]) === false
     ) {
-      let value_update = meta.config[non_null_key]
-
-      // Convert to array as needed
-      if (! Array.isArray (meta.config[non_null_key])) {
-        value_update = [value_update]
-      }
-
-      value_update = value_update.concat ([value])
-
-      return {
-        config: { ...meta.config, [non_null_key]: value_update },
-        prior_option: { key, value: value_update },
-        non_null_key
-      }
+      return appendValueToOption (meta, key, value, non_null_key)
     }
 
     // Concat a value
 
     else {
-      let value_update;
-
-      // Don't concat to implicit value, overwrite it 
-      // if the new value is not implicit otherwise skip it
-
-      if (isImplicitValue (meta.config[non_null_key])) {
-        if (! isImplicitValue (value))
-          value_update = value
-        else
-          return { ...meta, prior_option: { key, value }, non_null_key }
-      }
-
-      // Concat to an array's last element value
-      else if (Array.isArray (meta.config[non_null_key])) {
-        const last_idx = meta.config[non_null_key].length - 1
-        const last_value = meta.config[non_null_key][last_idx]
-        const last_update = isImplicitValue (last_value) ? value : last_value + ' ' + value
-        value_update = meta.config[non_null_key].slice (0, last_idx).concat ([last_update])
-      }
-
-      // Concat to a string value
-      else { 
-        value_update = meta.config[non_null_key] + ' ' + value 
-      }
-
-      return {
-        config: { ...meta.config, [non_null_key]: value_update },
-        prior_option: { key, value: value_update },
-        non_null_key
-      }
+      return concatToOptionValue (meta, key, value, non_null_key)
     }
 
   }
@@ -136,4 +67,95 @@ function isImplicitValue (value: ProgramOption['value']): boolean {
     value === undefined ||
     (typeof value === 'number' && Object.is (value, NaN) === false)
   )
+}
+
+/**
+ * Update an existing program option having an implicit value
+ */
+function updateOptionImplicitValue (meta, key, value, non_null_key): ProgramOptionsMeta {
+  if (value === true) {
+    let value_update;
+
+    if (meta.config[non_null_key] === true) {
+      value_update = 2
+    }
+    else if (typeof meta.config[non_null_key] === 'number') {
+      value_update = meta.config[non_null_key] + 1
+    }
+    else {
+      value_update = true
+    }
+
+    return {
+      config: { ...meta.config , [non_null_key]: value_update },
+      prior_option: { key, value: value_update },
+      non_null_key
+    }
+  }
+  else if (value === false) {
+    return {
+      config: { ...meta.config , [non_null_key]: value },
+      prior_option: { key, value },
+      non_null_key
+    }
+  }
+
+  return { ...meta, prior_option: { key, value }, non_null_key }
+}
+
+/**
+ * Append a value to an existing program option
+ */
+function appendValueToOption (meta, key, value, non_null_key): ProgramOptionsMeta {
+  let value_update = meta.config[non_null_key]
+
+  // Convert to array as needed
+  if (! Array.isArray (meta.config[non_null_key])) {
+    value_update = [value_update]
+  }
+
+  value_update = value_update.concat ([value])
+
+
+  return {
+    config: { ...meta.config, [non_null_key]: value_update },
+    prior_option: { key, value: value_update },
+    non_null_key
+  }
+}
+
+/**
+ * Concat a value to an existing program option
+ */
+function concatToOptionValue (meta, key, value, non_null_key): ProgramOptionsMeta {
+  let value_update;
+
+  // Don't concat to implicit value, overwrite it
+  // if the new value is not implicit otherwise skip it
+
+  if (isImplicitValue (meta.config[non_null_key])) {
+    if (! isImplicitValue (value))
+      value_update = value
+    else
+      return { ...meta, prior_option: { key, value }, non_null_key }
+  }
+
+  // Concat to an array's last element value
+  else if (Array.isArray (meta.config[non_null_key])) {
+    const last_idx = meta.config[non_null_key].length - 1
+    const last_value = meta.config[non_null_key][last_idx]
+    const last_update = isImplicitValue (last_value) ? value : last_value + ' ' + value
+    value_update = meta.config[non_null_key].slice (0, last_idx).concat ([last_update])
+  }
+
+  // Concat to a string value
+  else {
+    value_update = meta.config[non_null_key] + ' ' + value
+  }
+
+  return {
+    config: { ...meta.config, [non_null_key]: value_update },
+    prior_option: { key, value: value_update },
+    non_null_key
+  }
 }
